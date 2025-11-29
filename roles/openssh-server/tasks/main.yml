@@ -20,7 +20,9 @@
       # Authentication Settings
       PermitRootLogin no
       MaxAuthTries 3
+      PubkeyAuthentication yes
       AuthorizedKeysFile .ssh/authorized_keys
+      PasswordAuthentication no
       PermitEmptyPasswords no
       UsePAM yes
 
