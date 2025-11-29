@@ -1,0 +1,34 @@
+---
+- name: Install OpenSSH server
+  ansible.builtin.apt:
+    name: openssh-server
+    state: present
+    update_cache: yes
+
+- name: Deploy custom SSH config
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config.d/100-razobeckett.conf
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      # Network & Connection Settings
+      Port 22
+      ClientAliveInterval 120
+      ClientAliveCountMax 2
+
+      # Authentication Settings
+      PermitRootLogin no
+      MaxAuthTries 3
+      AuthorizedKeysFile .ssh/authorized_keys
+      PermitEmptyPasswords no
+      UsePAM yes
+
+      # Forwarding & Tunneling
+      AllowAgentForwarding yes
+      PermitTunnel yes
+      X11Forwarding no
+
+      # Subsystems
+      Subsystem sftp /usr/lib/ssh/sftp-server
+  notify: Validate and Restart SSH Server

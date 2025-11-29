@@ -1,0 +1,29 @@
+---
+- name: Install UFW Firewall
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Enable UFW Firewall
+  community.general.ufw:
+    state: enabled
+
+- name: Configure UFW rules
+  block:
+    - name: Set UFW to deny all incoming by default
+      community.general.ufw:
+        direction: incoming
+        policy: deny
+
+    - name: Set UFW to allow all outgoing by default
+      community.general.ufw:
+        direction: outgoing
+        policy: allow
+
+    - name: Limit SSH access to prevent brute force attacks
+      community.general.ufw:
+        rule: limit
+        port: 22
+        proto: tcp
+  notify: Reload UFW Firewall

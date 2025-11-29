@@ -1,0 +1,4 @@
+---
+- name: Reload UFW Firewall
+  community.general.ufw:
+    state: reloaded
