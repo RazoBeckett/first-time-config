@@ -32,5 +32,5 @@
       X11Forwarding no
 
       # Subsystems
-      Subsystem sftp /usr/lib/ssh/sftp-server
+      Subsystem sftp /usr/lib/openssh/sftp-server
   notify: Validate and Restart SSH Server
